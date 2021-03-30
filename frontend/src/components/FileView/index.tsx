@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import upDirPath from "../../utils/upDirPath";
 
@@ -20,9 +21,9 @@ const FileView: React.FC = () => {
 
   return (
     <>
-      <a href={upDirPath(pathname).replace("file", "dir")}>
+      <Link to={upDirPath(pathname).replace("file", "dir")}>
         <button className="button button-primary m-3">Back</button>
-      </a>
+      </Link>
       <div>
         <span style={{ whiteSpace: "pre", color: "cyan" }}>{content}</span>;
       </div>
