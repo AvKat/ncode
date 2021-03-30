@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import classNameFromList from "../../utils/classNameFromList";
 
 export interface BreadcrumbProps {
@@ -45,16 +46,16 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path }) => {
         style={{ margin: 0 }}
       >
         <li className="breadcrumb-item">
-          <a href="/dir" className="link-white">
+          <Link to="/dir" className="link-white">
             START
-          </a>
+          </Link>
         </li>
 
         {items.slice(0, -1).map((item, i) => (
           <li className="breadcrumb-item" key={`${item} - ${i}`}>
-            <a href={item.url} className="link-white">
+            <Link to={item.url} className="link-white">
               {item.name}
-            </a>
+            </Link>
           </li>
         ))}
 
