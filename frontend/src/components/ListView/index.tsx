@@ -5,11 +5,15 @@ import { JSONResponseListItem } from "../../types";
 import upDirPath from "../../utils/upDirPath";
 import ListItem from "../ListItem";
 import Loading from "../Loading";
+import generateItem from "./generateItems";
+
+export interface ContentType {
+  dirs: JSONResponseListItem[];
+  files: JSONResponseListItem[];
+}
 
 const ListView: React.FC = () => {
-  const [content, setContent] = useState<
-    [JSONResponseListItem[], JSONResponseListItem[]]
-  >([[], []]);
+  const [content, setContent] = useState<ContentType>({ dirs: [], files: [] });
   const { pathname } = useLocation();
 
   const fetchData = useFetch("/apis" + pathname);
@@ -18,19 +22,13 @@ const ListView: React.FC = () => {
     if (fetchData.response) {
       const { data, status } = fetchData.response;
       if (status) {
-        setContent([
-          data.filter((item: any) => item.dir),
-          data.filter((item: any) => !item.dir),
-        ]);
+        setContent({
+          dirs: data.filter((item: any) => item.dir),
+          files: data.filter((item: any) => !item.dir),
+        });
       }
     }
   }, [fetchData.response]);
-
-  const getPath = (name: string, i: number) => {
-    return i === 1
-      ? `${pathname}/${name}`.replace("dir", "file")
-      : `${pathname}/${name}`;
-  };
 
   return (
     <Loading isLoading={fetchData.loading}>
@@ -40,17 +38,8 @@ const ListView: React.FC = () => {
             (up a dir)
           </ListItem>
         )}
-        {content.map((list, i) =>
-          list.map((item) => (
-            <ListItem
-              key={`${item.name}-${i}`}
-              type={i ? "file" : "dir"}
-              to={getPath(item.name, i)}
-            >
-              {item.name}
-            </ListItem>
-          ))
-        )}
+        {content.dirs.map((item) => generateItem(item, false, pathname))}
+        {content.files.map((item) => generateItem(item, true, pathname))}
       </div>
     </Loading>
   );
