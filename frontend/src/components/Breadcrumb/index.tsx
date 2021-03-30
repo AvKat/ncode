@@ -17,7 +17,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path }) => {
     const parts = path.split("/").slice(2);
     let res: LinkType[] = [];
     let temp: LinkType | null = null;
-    let url = "/dir";
+    let url = "/#/dir";
 
     parts.forEach((part) => {
       url += `/${part}`;
