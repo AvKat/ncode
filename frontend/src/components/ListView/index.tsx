@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import useFetch from "../../hooks/useFetch";
 import { JSONResponseListItem } from "../../types";
-import upDirPath from "../../utils/upDirPath";
+import generateRelativePath from "../../utils/generateRelativePath";
 import ListItem from "../ListItem";
 import Loading from "../Loading";
 import generateItem from "./generateItems";
@@ -34,12 +34,12 @@ const ListView: React.FC = () => {
     <Loading isLoading={fetchData.loading}>
       <div style={{ padding: "20px", paddingBottom: "55px" }}>
         {!["/dir", "/dir/"].includes(pathname) && (
-          <ListItem type="other" to={upDirPath(pathname)}>
+          <ListItem type="other" to={generateRelativePath("..", pathname)}>
             (up a dir)
           </ListItem>
         )}
-        {content.dirs.map((item) => generateItem(item, false, pathname))}
-        {content.files.map((item) => generateItem(item, true, pathname))}
+        {content.dirs.map((item) => generateItem(item, pathname))}
+        {content.files.map((item) => generateItem(item, pathname))}
       </div>
     </Loading>
   );

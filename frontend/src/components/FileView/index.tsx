@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
-import upDirPath from "../../utils/upDirPath";
+import generateRelativePath from "../../utils/generateRelativePath";
 import Loading from "../Loading";
 
 const FileView: React.FC = () => {
@@ -22,7 +22,7 @@ const FileView: React.FC = () => {
   return (
     <Loading isLoading={fetchData.loading}>
       <div style={{ padding: "20px", paddingBottom: "55px" }}>
-        <Link to={upDirPath(pathname).replace("file", "dir")}>
+        <Link to={generateRelativePath("..", pathname)}>
           <button className="button button-primary m-3">Back</button>
         </Link>
         <div>
