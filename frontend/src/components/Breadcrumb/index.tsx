@@ -1,35 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import classNameFromList from "../../utils/classNameFromList";
+import pathToBreadcrumb from "./pathToBreadCrumb";
 
-export interface BreadcrumbProps {
+interface BreadcrumbProps {
   path: string;
 }
 
-export interface LinkType {
+export interface BreadcrumbPartType {
   name: string;
   url: string;
 }
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ path }) => {
-  const [items, setItems] = useState<LinkType[]>([]);
+  const [items, setItems] = useState<BreadcrumbPartType[]>([]);
 
   useEffect(() => {
-    const parts = path.split("/").slice(2);
-    let res: LinkType[] = [];
-    let temp: LinkType | null = null;
-    let url = "/dir";
-
-    parts.forEach((part) => {
-      url += `/${part}`;
-      temp = {
-        name: part,
-        url,
-      };
-      res.push(temp);
-    });
-
-    setItems(res);
+    setItems(pathToBreadcrumb(path));
   }, [path]);
 
   return (
