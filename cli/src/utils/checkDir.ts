@@ -1,7 +1,11 @@
-import fs from "fs";
+import { lstatSync } from "fs";
 
 const checkDir = (path: string) => {
-  return !fs.statSync(path).isFile();
+  try {
+    return lstatSync(path).isDirectory();
+  } catch (err) {
+    return false;
+  }
 };
 
 export { checkDir };
