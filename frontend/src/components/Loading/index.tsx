@@ -9,7 +9,7 @@ const Loading: React.FC<LoadingProps> = ({ isLoading, children }) => {
   return (
     <>
       {isLoading ? (
-        <div className="fullscreen centered">
+        <div className="centered" style={{ height: "inherit" }}>
           <div className="spinner"></div>
         </div>
       ) : (
