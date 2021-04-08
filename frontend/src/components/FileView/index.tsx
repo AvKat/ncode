@@ -33,4 +33,4 @@ const FileView: React.FC = () => {
   );
 };
 
-export default FileView;
+export default React.memo(FileView);

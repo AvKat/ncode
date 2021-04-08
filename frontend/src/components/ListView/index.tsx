@@ -45,4 +45,4 @@ const ListView: React.FC = () => {
   );
 };
 
-export default ListView;
+export default React.memo(ListView);

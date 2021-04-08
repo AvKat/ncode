@@ -17,7 +17,7 @@ const Routes = () => {
           <h1>Not Found</h1>
         </Route>
       </Switch>
-      <Breadcrumb path={pathname} />
+      <Breadcrumb />
     </>
   );
 };

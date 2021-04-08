@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import classNameFromList from "../../utils/classNameFromList";
 import pathToBreadcrumb from "./pathToBreadCrumb";
-
-interface BreadcrumbProps {
-  path: string;
-}
 
 export interface BreadcrumbPartType {
   name: string;
   url: string;
 }
 
-const Breadcrumb: React.FC<BreadcrumbProps> = ({ path }) => {
+const Breadcrumb: React.FC = () => {
   const [items, setItems] = useState<BreadcrumbPartType[]>([]);
+  const { pathname } = useLocation();
+
+  const memoizedPathForBreadcrumb = useMemo(() => pathToBreadcrumb(pathname), [
+    pathname,
+  ]);
 
   useEffect(() => {
-    setItems(pathToBreadcrumb(path));
-  }, [path]);
+    setItems(memoizedPathForBreadcrumb);
+  }, [pathname]);
 
   return (
     <nav
@@ -62,4 +63,4 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ path }) => {
   );
 };
 
-export default Breadcrumb;
+export default React.memo(Breadcrumb);

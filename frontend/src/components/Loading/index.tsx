@@ -3,6 +3,7 @@ import "./spinner.css";
 
 export interface LoadingProps {
   isLoading: boolean;
+  children: React.ReactNode;
 }
 
 const Loading: React.FC<LoadingProps> = ({ isLoading, children }) => {
@@ -19,4 +20,6 @@ const Loading: React.FC<LoadingProps> = ({ isLoading, children }) => {
   );
 };
 
-export default Loading;
+export default React.memo(Loading, (prevProps, nextProps) => {
+  return prevProps.isLoading === nextProps.isLoading;
+});
