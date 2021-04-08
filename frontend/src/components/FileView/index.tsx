@@ -3,6 +3,8 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import useFetch from "../../hooks/useFetch";
 import generateRelativePath from "../../utils/generateRelativePath";
+import inferLanguageFromPath from "../../utils/inferLanguageFromPath";
+import { Editor } from "../Editor";
 import Loading from "../Loading";
 
 const FileView: React.FC = () => {
@@ -21,13 +23,11 @@ const FileView: React.FC = () => {
 
   return (
     <Loading isLoading={fetchData.loading}>
-      <div style={{ padding: "20px", paddingBottom: "55px" }}>
+      <div style={{ height: "80vh", paddingBottom: "55px" }}>
+        <Editor value={content} language={inferLanguageFromPath(pathname)} />
         <Link to={generateRelativePath("..", pathname)}>
           <button className="button button-primary m-3">Back</button>
         </Link>
-        <div>
-          <span style={{ whiteSpace: "pre", color: "cyan" }}>{content}</span>;
-        </div>
       </div>
     </Loading>
   );
