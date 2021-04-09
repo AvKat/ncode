@@ -7,23 +7,24 @@ type ResType = Array<{ name: string; dir: boolean }>;
 const listDir = (req: Request, res: Response) => {
   let fPath = generatePath(req.params.name);
   if (!checkDir(fPath)) {
-    res.status(404).json({
+    res.json({
+      status: 0,
       message: "Not a directory. Use the /file/ route for files.",
     });
     return;
   }
 
   let fileList = readdirSync(fPath);
-  let result: ResType = [];
+  let data: ResType = [];
   let isDir;
 
   fileList.forEach((val) => {
     let path = `${fPath}/${val}`;
     isDir = checkDir(path);
-    result.push({ name: val, dir: isDir });
+    data.push({ name: val, dir: isDir });
   });
 
-  res.status(200).json({ result });
+  res.json({ status: 1, data });
 };
 
 export default listDir;
