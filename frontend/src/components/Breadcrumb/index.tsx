@@ -30,6 +30,7 @@ const Breadcrumb: React.FC = () => {
           "breadcrumb",
           "border border-5 border-dark",
           "bg-danger",
+          "font-weight-bold",
         ])}
         style={{ margin: 0 }}
       >

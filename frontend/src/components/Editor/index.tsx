@@ -1,5 +1,11 @@
-import React, { useRef, useEffect } from "react";
+import React, {useRef, useEffect} from "react";
 import * as monaco from "monaco-editor";
+
+interface EditorProps {
+  value: string;
+  language: string;
+  style?: Object;
+}
 
 // @ts-ignore
 self.MonacoEnvironment = {
@@ -20,10 +26,7 @@ self.MonacoEnvironment = {
   },
 };
 
-export const Editor: React.FC<{ value: string; language: string }> = ({
-  value,
-  language,
-}) => {
+export const Editor: React.FC<EditorProps> = ({value, language, style}) => {
   const divEl = useRef<HTMLDivElement>(null);
   let editor: monaco.editor.IStandaloneCodeEditor;
   useEffect(() => {
@@ -50,6 +53,7 @@ export const Editor: React.FC<{ value: string; language: string }> = ({
       style={{
         display: "flex",
         height: "inherit",
+        ...style,
       }}
     ></div>
   );
