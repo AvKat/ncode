@@ -32,4 +32,4 @@ const ListItem: React.FC<LIProps> = ({ to, type = "other", children }) => {
   );
 };
 
-export default ListItem;
+export { ListItem };

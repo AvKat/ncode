@@ -1,7 +1,7 @@
 import { Redirect, Route, Switch, useLocation } from "react-router";
-import ListView from "./components/ListView";
-import FileView from "./components/FileView";
-import Breadcrumb from "./components/Breadcrumb";
+import { ListView } from "./components/ListView";
+import { FileView } from "./components/FileView";
+import { Breadcrumb } from "./components/Breadcrumb";
 
 const Routes = () => {
   const { pathname } = useLocation();
@@ -22,4 +22,4 @@ const Routes = () => {
   );
 };
 
-export default Routes;
+export { Routes };

@@ -8,7 +8,7 @@ export interface BreadcrumbPartType {
   url: string;
 }
 
-const Breadcrumb: React.FC = () => {
+const Breadcrumb: React.FC = React.memo(() => {
   const [items, setItems] = useState<BreadcrumbPartType[]>([]);
   const { pathname } = useLocation();
 
@@ -62,6 +62,6 @@ const Breadcrumb: React.FC = () => {
       </ol>
     </nav>
   );
-};
+});
 
-export default React.memo(Breadcrumb);
+export { Breadcrumb };

@@ -1,6 +1,6 @@
 import type { JSONResponseListItem } from "../../types";
 import generateRelativePath from "../../utils/generateRelativePath";
-import ListItem from "../ListItem";
+import { ListItem } from "../ListItem";
 
 const generateItem = (item: JSONResponseListItem, pathname: string) => {
   let i = 0;

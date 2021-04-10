@@ -3,10 +3,10 @@ import { useLocation } from "react-router";
 import useFetch from "../../hooks/useFetch";
 import inferLanguageFromPath from "../../utils/inferLanguageFromPath";
 import { Editor } from "../Editor";
-import EditorStatusBar from "../EditorStatusBar";
-import Loading from "../Loading";
+import { EditorStatusBar } from "../EditorStatusBar";
+import { Loading } from "../Loading";
 
-const FileView: React.FC = () => {
+const FileView: React.FC = React.memo(() => {
   const [content, setContent] = useState("");
   const { pathname } = useLocation();
   const fetchData = useFetch("/apis" + pathname);
@@ -32,6 +32,6 @@ const FileView: React.FC = () => {
       </div>
     </Loading>
   );
-};
+});
 
-export default React.memo(FileView);
+export { FileView };

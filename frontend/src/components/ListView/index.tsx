@@ -3,8 +3,8 @@ import { useLocation } from "react-router";
 import useFetch from "../../hooks/useFetch";
 import { JSONResponseListItem } from "../../types";
 import generateRelativePath from "../../utils/generateRelativePath";
-import ListItem from "../ListItem";
-import Loading from "../Loading";
+import { ListItem } from "../ListItem";
+import { Loading } from "../Loading";
 import generateItem from "./generateItems";
 
 export interface ContentType {
@@ -12,7 +12,7 @@ export interface ContentType {
   files: JSONResponseListItem[];
 }
 
-const ListView: React.FC = () => {
+const ListView: React.FC = React.memo(() => {
   const [content, setContent] = useState<ContentType>({ dirs: [], files: [] });
   const { pathname } = useLocation();
 
@@ -43,6 +43,6 @@ const ListView: React.FC = () => {
       </div>
     </Loading>
   );
-};
+});
 
-export default React.memo(ListView);
+export { ListView };

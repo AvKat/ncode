@@ -7,7 +7,7 @@ interface StatusBarProps {
   pathname: string;
 }
 
-const EditorStatusBar: React.FC<StatusBarProps> = ({ pathname }) => {
+const EditorStatusBar: React.FC<StatusBarProps> = React.memo(({ pathname }) => {
   return (
     <div
       style={{
@@ -30,6 +30,6 @@ const EditorStatusBar: React.FC<StatusBarProps> = ({ pathname }) => {
       </Link>
     </div>
   );
-};
+});
 
-export default EditorStatusBar;
+export { EditorStatusBar };

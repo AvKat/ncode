@@ -6,20 +6,23 @@ export interface LoadingProps {
   children: React.ReactNode;
 }
 
-const Loading: React.FC<LoadingProps> = ({ isLoading, children }) => {
-  return (
-    <>
-      {isLoading ? (
-        <div className="centered" style={{ height: "inherit" }}>
-          <div className="spinner"></div>
-        </div>
-      ) : (
-        children
-      )}
-    </>
-  );
-};
+const Loading: React.FC<LoadingProps> = React.memo(
+  ({ isLoading, children }) => {
+    return (
+      <>
+        {isLoading ? (
+          <div className="centered" style={{ height: "inherit" }}>
+            <div className="spinner"></div>
+          </div>
+        ) : (
+          children
+        )}
+      </>
+    );
+  },
+  (prevProps, nextProps) => {
+    return prevProps.isLoading === nextProps.isLoading;
+  }
+);
 
-export default React.memo(Loading, (prevProps, nextProps) => {
-  return prevProps.isLoading === nextProps.isLoading;
-});
+export { Loading };
