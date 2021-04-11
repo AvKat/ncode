@@ -18,11 +18,11 @@ const readFile = (req: Request, res: Response) => {
   } catch (err) {
     let message;
     existsSync(f_path)
-      ? (message = `${f_name} not found in ${cwd}`)
-      : (message = "Not a file. Use the /dir/ route for directories");
+      ? (message = "Not a file. Use the /dir/ route for directories")
+      : (message = `${f_name} not found in ${cwd}`);
     res.json({
       status: 0,
-      message,
+      data: message,
     });
   }
 };

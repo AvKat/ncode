@@ -1,15 +1,20 @@
-import { readdirSync } from "fs";
+import { readdirSync, existsSync } from "fs";
 import { Request, Response } from "express";
 import { checkDir, generatePath } from "../../utils";
 
 type ResType = Array<{ name: string; dir: boolean }>;
+
+const notDirMessage = "Not a directory. Use the /file/ route for files.";
+const doesntExistMessage = (name: string) => {
+  return `The path ${name} does not exist.`;
+};
 
 const listDir = (req: Request, res: Response) => {
   let fPath = generatePath(req.params.name);
   if (!checkDir(fPath)) {
     res.json({
       status: 0,
-      message: "Not a directory. Use the /file/ route for files.",
+      data: existsSync(fPath) ? notDirMessage : doesntExistMessage(fPath),
     });
     return;
   }
