@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
+import { useToasts } from "react-toast-notifications";
 import useFetch from "../../hooks/useFetch";
 import { JSONResponseListItem } from "../../types";
 import generateRelativePath from "../../utils/generateRelativePath";
@@ -15,6 +16,8 @@ export interface ContentType {
 const ListView: React.FC = React.memo(() => {
   const [content, setContent] = useState<ContentType>({ dirs: [], files: [] });
   const { pathname } = useLocation();
+  const { goBack } = useHistory();
+  const { addToast } = useToasts();
 
   const fetchData = useFetch("/apis" + pathname);
 
@@ -26,6 +29,9 @@ const ListView: React.FC = React.memo(() => {
           dirs: data.filter((item: any) => item.dir),
           files: data.filter((item: any) => !item.dir),
         });
+      } else {
+        goBack();
+        addToast(data, { appearance: "error", autoDismiss: true });
       }
     }
   }, [fetchData.response]);
