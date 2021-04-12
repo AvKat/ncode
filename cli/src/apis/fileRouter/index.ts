@@ -1,6 +1,5 @@
-import { Router, urlencoded } from "express";
-import readFile from "./readFile";
-import writeFile from "./writeFile";
+import {Router, urlencoded} from "express";
+import handleFileRequest from "./handleFileRequest";
 
 const fileRouter = Router();
 
@@ -10,7 +9,7 @@ fileRouter.use(
   })
 );
 
-fileRouter.get("/:name(*)", readFile);
-fileRouter.post("/:name(*)", writeFile);
+fileRouter.get("/:name(*)", handleFileRequest);
+fileRouter.post("/:name(*)", handleFileRequest);
 
 export default fileRouter;
