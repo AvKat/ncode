@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { readFileSync, statSync, existsSync } from "fs";
+import { writeFileSync, statSync, existsSync } from "fs";
 import path from "path";
 
-const readFile = (req: Request, res: Response) => {
+const writeFile = (req: Request, res: Response) => {
   let cwd = process.cwd();
   let f_name = req.params.name;
   if (!req.params.name) {
@@ -13,8 +13,9 @@ const readFile = (req: Request, res: Response) => {
   let f_path = path.join(cwd, f_name);
   try {
     statSync(f_path).isFile();
-    let data = readFileSync(f_path, { encoding: "utf8" });
-    res.json({ status: 1, data });
+    let { data } = req.body;
+    writeFileSync(f_path, data);
+    res.json({ status: 1 });
   } catch (err) {
     let message;
     existsSync(f_path)
@@ -27,4 +28,4 @@ const readFile = (req: Request, res: Response) => {
   }
 };
 
-export default readFile;
+export default writeFile;
