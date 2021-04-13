@@ -19,7 +19,6 @@ const handleFileRequest = (req: Request, res: Response) => {
       res.json({ status: 1, data });
       return;
     } else if (req.method === "POST") {
-      console.log(req);
       let { data } = req.body;
       if (!data) {
         res.json({ status: 0, data: "No content to write" });

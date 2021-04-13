@@ -1,11 +1,10 @@
-import { Router } from "express";
+import express from "express";
 import handleFileRequest from "./handleFileRequest";
-import bodyParser from "body-parser";
 
-const fileRouter = Router();
+const fileRouter = express.Router();
 
-fileRouter.use(bodyParser.urlencoded({ extended: true }));
-fileRouter.use(bodyParser.json());
+fileRouter.use(express.urlencoded({ extended: true }));
+fileRouter.use(express.json());
 
 fileRouter.get("/:name(*)", handleFileRequest);
 fileRouter.post("/:name(*)", handleFileRequest);
