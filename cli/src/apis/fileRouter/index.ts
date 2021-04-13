@@ -1,13 +1,11 @@
-import {Router, urlencoded} from "express";
+import { Router } from "express";
 import handleFileRequest from "./handleFileRequest";
+import bodyParser from "body-parser";
 
 const fileRouter = Router();
 
-fileRouter.use(
-  urlencoded({
-    extended: true,
-  })
-);
+fileRouter.use(bodyParser.urlencoded({ extended: true }));
+fileRouter.use(bodyParser.json());
 
 fileRouter.get("/:name(*)", handleFileRequest);
 fileRouter.post("/:name(*)", handleFileRequest);
