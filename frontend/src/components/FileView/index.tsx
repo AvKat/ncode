@@ -37,7 +37,19 @@ const FileView: React.FC = React.memo(() => {
       .post("/apis" + pathname, {
         data: contentRef.current,
       })
-      .then(({ data }) => console.log(data));
+      .then(({ data }) => {
+        if (data.status) {
+          addToast("File save succesfull", {
+            appearance: "success",
+            autoDismiss: true,
+          });
+        } else {
+          addToast("Error while saving" + data.data, {
+            appearance: "error",
+            autoDismiss: true,
+          });
+        }
+      });
   };
 
   return (
