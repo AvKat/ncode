@@ -1,9 +1,10 @@
-import React, {useRef, useEffect} from "react";
+import React, { useRef, useEffect } from "react";
 import * as monaco from "monaco-editor";
 
 interface EditorProps {
   value: string;
   language: string;
+  setValue: Function;
   style?: Object;
 }
 
@@ -26,22 +27,29 @@ self.MonacoEnvironment = {
   },
 };
 
-export const Editor: React.FC<EditorProps> = ({value, language, style}) => {
+export const Editor: React.FC<EditorProps> = ({
+  value,
+  setValue,
+  language,
+  style,
+}) => {
   const divEl = useRef<HTMLDivElement>(null);
   let editor: monaco.editor.IStandaloneCodeEditor;
   useEffect(() => {
-    console.log(monaco.languages.getLanguages());
     if (divEl.current) {
       editor = monaco.editor.create(divEl.current, {
         theme: "vs-dark",
-        readOnly: true,
         minimap: {
           enabled: false,
         },
         value,
         language,
       });
+      editor.onDidChangeModelContent(() => {
+        setValue(editor.getValue());
+      });
     }
+
     return () => {
       editor.dispose();
     };

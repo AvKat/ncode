@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useHistory, useLocation } from "react-router";
 import { useToasts } from "react-toast-notifications";
 import useFetch from "../../hooks/useFetch";
@@ -9,6 +9,7 @@ import { Loading } from "../Loading";
 
 const FileView: React.FC = React.memo(() => {
   const [content, setContent] = useState("");
+  const contentRef = useRef(content);
   const { pathname } = useLocation();
   const { goBack } = useHistory();
   const { addToast } = useToasts();
@@ -26,15 +27,34 @@ const FileView: React.FC = React.memo(() => {
     }
   }, [fetchData.response]);
 
+  useEffect(() => {
+    contentRef.current = content;
+  }, [content]);
+
+  const saveContent = () => {
+    fetch("/apis" + pathname, {
+      method: "POST",
+      body: JSON.stringify({
+        data: contentRef.current,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=utf-8",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => console.log(json));
+  };
+
   return (
     <Loading isLoading={fetchData.loading}>
       <div style={{ height: "80vh", paddingBottom: "55px" }}>
         <Editor
           value={content}
+          setValue={setContent}
           language={inferLanguageFromPath(pathname)}
           style={{ height: "calc(100vh - 80px)" }}
         />
-        <EditorStatusBar {...{ pathname }} />
+        <EditorStatusBar pathname={pathname} saveContent={saveContent} />
       </div>
     </Loading>
   );
