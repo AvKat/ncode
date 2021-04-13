@@ -6,6 +6,7 @@ import inferLanguageFromPath from "../../utils/inferLanguageFromPath";
 import { Editor } from "../Editor";
 import { EditorStatusBar } from "../EditorStatusBar";
 import { Loading } from "../Loading";
+import axios from "axios";
 
 const FileView: React.FC = React.memo(() => {
   const [content, setContent] = useState("");
@@ -32,17 +33,11 @@ const FileView: React.FC = React.memo(() => {
   }, [content]);
 
   const saveContent = () => {
-    fetch("/apis" + pathname, {
-      method: "POST",
-      body: JSON.stringify({
+    axios
+      .post("/apis" + pathname, {
         data: contentRef.current,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=utf-8",
-      },
-    })
-      .then((res) => res.json())
-      .then((json) => console.log(json));
+      })
+      .then(({ data }) => console.log(data));
   };
 
   return (

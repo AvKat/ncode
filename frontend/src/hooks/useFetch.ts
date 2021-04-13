@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import useStateCallback from "./useStateCallback";
 
 const useFetch = (url: string) => {
@@ -7,12 +8,10 @@ const useFetch = (url: string) => {
 
   useEffect(() => {
     setLoading(true, () => {
-      fetch(url)
-        .then((res) => res.json())
-        .then((json) => {
-          setResponse(json);
-          setLoading(false);
-        });
+      axios.get(url).then((json) => {
+        setResponse(json.data);
+        setLoading(false);
+      });
     });
   }, [url, setLoading]);
 
